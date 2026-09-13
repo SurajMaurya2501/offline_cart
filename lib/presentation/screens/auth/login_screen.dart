@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:offline_cart/presentation/controllers/auth_controller.dart';
 
@@ -84,16 +85,10 @@ class LoginScreen extends StatelessWidget {
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.network(
-                                  'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
-                                  width: 20,
+                                SvgPicture.asset(
+                                  'assets/svg/google.svg',
                                   height: 20,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      const Icon(
-                                        Icons.g_mobiledata,
-                                        size: 26,
-                                        color: Colors.redAccent,
-                                      ),
+                                  width: 20,
                                 ),
                                 const SizedBox(width: 12),
                                 const Text(
