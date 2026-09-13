@@ -9,6 +9,7 @@ import 'package:offline_cart/presentation/screens/dashboard/widgets/stats_sectio
 import 'package:offline_cart/presentation/screens/dashboard/widgets/sync_card.dart';
 import 'package:offline_cart/presentation/screens/dashboard/widgets/user_profile_card.dart';
 import 'package:offline_cart/presentation/screens/favourites/favourites_screen.dart';
+import 'package:offline_cart/presentation/widgets/sync_status_banner.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -125,6 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   const SizedBox(height: 20),
                   StatsSection(controller: controller),
                   const SizedBox(height: 16),
+                  const SyncStatusBanner(),
                   SyncCard(controller: controller),
                   const SizedBox(height: 28),
                   ActionsSection(controller: controller),

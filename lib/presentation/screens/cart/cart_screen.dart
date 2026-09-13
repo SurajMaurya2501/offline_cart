@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:offline_cart/presentation/controllers/cart_controller.dart';
 import 'package:offline_cart/presentation/screens/products/product_details/product_details_screen.dart';
+import 'package:offline_cart/presentation/widgets/sync_status_banner.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -90,6 +91,10 @@ class CartScreen extends StatelessWidget {
 
         return Column(
           children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: SyncStatusBanner(),
+            ),
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(
@@ -186,8 +191,10 @@ class CartScreen extends StatelessWidget {
                                       color: Colors.red.shade400,
                                       size: 20,
                                     ),
-                                    onPressed: () =>
-                                        controller.deleteProduct(product.id),
+                                    onPressed: () => controller.deleteProduct(
+                                      product.id,
+                                      productTitle: product.title,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -224,6 +231,7 @@ class CartScreen extends StatelessWidget {
                                               controller.decrementQuantity(
                                                 product.id,
                                                 quantity,
+                                                productTitle: product.title,
                                               ),
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -250,6 +258,7 @@ class CartScreen extends StatelessWidget {
                                               controller.incrementQuantity(
                                                 product.id,
                                                 quantity,
+                                                productTitle: product.title,
                                               ),
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -385,16 +394,7 @@ class CartScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Get.rawSnackbar(
-                    message: 'Proceeding to checkout',
-                    duration: const Duration(seconds: 2),
-                    snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: const Color(0xFF0F172A),
-                    margin: const EdgeInsets.all(16),
-                    borderRadius: 12,
-                  );
-                },
+                onPressed: controller.checkout,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF2563EB),
                   foregroundColor: Colors.white,

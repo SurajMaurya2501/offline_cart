@@ -68,7 +68,13 @@ class ProductSyncController extends GetxController {
       progress.value = 0.0;
       statusText.value = 'Saving categories: (0/$totalCategories)';
 
-      await _categoryDao.saveCategories(categoryCompanions);
+      await _categoryDao.saveCategories(
+        categoryCompanions,
+        onProgress: (count, total) {
+          progress.value = count / total;
+          statusText.value = 'Saving categories: ($count/$total)';
+        },
+      );
 
       isCategoriesDone.value = true;
       progress.value = 1.0;
@@ -112,7 +118,13 @@ class ProductSyncController extends GetxController {
       progress.value = 0.0;
       statusText.value = 'Saving products: (0/$totalProducts)';
 
-      await _productDao.saveProducts(productCompanions);
+      await _productDao.saveProducts(
+        productCompanions,
+        onProgress: (count, total) {
+          progress.value = count / total;
+          statusText.value = 'Saving products: ($count/$total)';
+        },
+      );
 
       isProductsDone.value = true;
       progress.value = 1.0;

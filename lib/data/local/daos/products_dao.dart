@@ -10,7 +10,10 @@ class ProductsDao extends DatabaseAccessor<AppDatabase>
     with _$ProductsDaoMixin {
   ProductsDao(super.db);
 
-  Future<void> saveProducts(List<ProductsTableCompanion> products) async {
+  Future<void> saveProducts(
+    List<ProductsTableCompanion> products, {
+    void Function(int count, int total)? onProgress,
+  }) async {
     await batch((batch) {
       batch.insertAll(
         productsTable,
@@ -18,6 +21,7 @@ class ProductsDao extends DatabaseAccessor<AppDatabase>
         mode: InsertMode.insertOrReplace,
       );
     });
+    onProgress?.call(products.length, products.length);
   }
 
   Future<ProductsTableData?> getProductById(int id) =>

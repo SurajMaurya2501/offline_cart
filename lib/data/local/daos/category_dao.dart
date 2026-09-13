@@ -10,7 +10,10 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
     with _$CategoryDaoMixin {
   CategoryDao(super.db);
 
-  Future<void> saveCategories(List<CategoriesTableCompanion> categories) async {
+  Future<void> saveCategories(
+    List<CategoriesTableCompanion> categories, {
+    void Function(int count, int total)? onProgress,
+  }) async {
     await batch((batch) {
       batch.insertAll(
         categoriesTable,
@@ -18,6 +21,7 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
         mode: InsertMode.insertOrReplace,
       );
     });
+    onProgress?.call(categories.length, categories.length);
   }
 
   Stream<List<CategoriesTableData>> watchAllCategories() =>

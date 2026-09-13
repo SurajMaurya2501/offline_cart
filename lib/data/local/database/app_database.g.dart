@@ -1368,6 +1368,508 @@ class CategoriesTableCompanion extends UpdateCompanion<CategoriesTableData> {
   }
 }
 
+class $PendingRequestsTableTable extends PendingRequestsTable
+    with TableInfo<$PendingRequestsTableTable, PendingRequestsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PendingRequestsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
+  late final GeneratedColumn<String> url = GeneratedColumn<String>(
+      'url', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _methodMeta = const VerificationMeta('method');
+  @override
+  late final GeneratedColumn<String> method = GeneratedColumn<String>(
+      'method', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _headersMeta =
+      const VerificationMeta('headers');
+  @override
+  late final GeneratedColumn<String> headers = GeneratedColumn<String>(
+      'headers', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
+  @override
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+      'body', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _queryParamsMeta =
+      const VerificationMeta('queryParams');
+  @override
+  late final GeneratedColumn<String> queryParams = GeneratedColumn<String>(
+      'query_params', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('Network Request'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  static const VerificationMeta _retryCountMeta =
+      const VerificationMeta('retryCount');
+  @override
+  late final GeneratedColumn<int> retryCount = GeneratedColumn<int>(
+      'retry_count', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+      'status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('pending'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        url,
+        method,
+        headers,
+        body,
+        queryParams,
+        description,
+        createdAt,
+        retryCount,
+        status
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pending_requests_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PendingRequestsTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('url')) {
+      context.handle(
+          _urlMeta, url.isAcceptableOrUnknown(data['url']!, _urlMeta));
+    } else if (isInserting) {
+      context.missing(_urlMeta);
+    }
+    if (data.containsKey('method')) {
+      context.handle(_methodMeta,
+          method.isAcceptableOrUnknown(data['method']!, _methodMeta));
+    } else if (isInserting) {
+      context.missing(_methodMeta);
+    }
+    if (data.containsKey('headers')) {
+      context.handle(_headersMeta,
+          headers.isAcceptableOrUnknown(data['headers']!, _headersMeta));
+    }
+    if (data.containsKey('body')) {
+      context.handle(
+          _bodyMeta, body.isAcceptableOrUnknown(data['body']!, _bodyMeta));
+    }
+    if (data.containsKey('query_params')) {
+      context.handle(
+          _queryParamsMeta,
+          queryParams.isAcceptableOrUnknown(
+              data['query_params']!, _queryParamsMeta));
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    if (data.containsKey('retry_count')) {
+      context.handle(
+          _retryCountMeta,
+          retryCount.isAcceptableOrUnknown(
+              data['retry_count']!, _retryCountMeta));
+    }
+    if (data.containsKey('status')) {
+      context.handle(_statusMeta,
+          status.isAcceptableOrUnknown(data['status']!, _statusMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PendingRequestsTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PendingRequestsTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      url: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}url'])!,
+      method: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}method'])!,
+      headers: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}headers']),
+      body: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}body']),
+      queryParams: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}query_params']),
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      retryCount: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}retry_count'])!,
+      status: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
+    );
+  }
+
+  @override
+  $PendingRequestsTableTable createAlias(String alias) {
+    return $PendingRequestsTableTable(attachedDatabase, alias);
+  }
+}
+
+class PendingRequestsTableData extends DataClass
+    implements Insertable<PendingRequestsTableData> {
+  final int id;
+  final String url;
+  final String method;
+  final String? headers;
+  final String? body;
+  final String? queryParams;
+  final String description;
+  final DateTime createdAt;
+  final int retryCount;
+  final String status;
+  const PendingRequestsTableData(
+      {required this.id,
+      required this.url,
+      required this.method,
+      this.headers,
+      this.body,
+      this.queryParams,
+      required this.description,
+      required this.createdAt,
+      required this.retryCount,
+      required this.status});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['url'] = Variable<String>(url);
+    map['method'] = Variable<String>(method);
+    if (!nullToAbsent || headers != null) {
+      map['headers'] = Variable<String>(headers);
+    }
+    if (!nullToAbsent || body != null) {
+      map['body'] = Variable<String>(body);
+    }
+    if (!nullToAbsent || queryParams != null) {
+      map['query_params'] = Variable<String>(queryParams);
+    }
+    map['description'] = Variable<String>(description);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['retry_count'] = Variable<int>(retryCount);
+    map['status'] = Variable<String>(status);
+    return map;
+  }
+
+  PendingRequestsTableCompanion toCompanion(bool nullToAbsent) {
+    return PendingRequestsTableCompanion(
+      id: Value(id),
+      url: Value(url),
+      method: Value(method),
+      headers: headers == null && nullToAbsent
+          ? const Value.absent()
+          : Value(headers),
+      body: body == null && nullToAbsent ? const Value.absent() : Value(body),
+      queryParams: queryParams == null && nullToAbsent
+          ? const Value.absent()
+          : Value(queryParams),
+      description: Value(description),
+      createdAt: Value(createdAt),
+      retryCount: Value(retryCount),
+      status: Value(status),
+    );
+  }
+
+  factory PendingRequestsTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PendingRequestsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      url: serializer.fromJson<String>(json['url']),
+      method: serializer.fromJson<String>(json['method']),
+      headers: serializer.fromJson<String?>(json['headers']),
+      body: serializer.fromJson<String?>(json['body']),
+      queryParams: serializer.fromJson<String?>(json['queryParams']),
+      description: serializer.fromJson<String>(json['description']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      retryCount: serializer.fromJson<int>(json['retryCount']),
+      status: serializer.fromJson<String>(json['status']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'url': serializer.toJson<String>(url),
+      'method': serializer.toJson<String>(method),
+      'headers': serializer.toJson<String?>(headers),
+      'body': serializer.toJson<String?>(body),
+      'queryParams': serializer.toJson<String?>(queryParams),
+      'description': serializer.toJson<String>(description),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'retryCount': serializer.toJson<int>(retryCount),
+      'status': serializer.toJson<String>(status),
+    };
+  }
+
+  PendingRequestsTableData copyWith(
+          {int? id,
+          String? url,
+          String? method,
+          Value<String?> headers = const Value.absent(),
+          Value<String?> body = const Value.absent(),
+          Value<String?> queryParams = const Value.absent(),
+          String? description,
+          DateTime? createdAt,
+          int? retryCount,
+          String? status}) =>
+      PendingRequestsTableData(
+        id: id ?? this.id,
+        url: url ?? this.url,
+        method: method ?? this.method,
+        headers: headers.present ? headers.value : this.headers,
+        body: body.present ? body.value : this.body,
+        queryParams: queryParams.present ? queryParams.value : this.queryParams,
+        description: description ?? this.description,
+        createdAt: createdAt ?? this.createdAt,
+        retryCount: retryCount ?? this.retryCount,
+        status: status ?? this.status,
+      );
+  PendingRequestsTableData copyWithCompanion(
+      PendingRequestsTableCompanion data) {
+    return PendingRequestsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      url: data.url.present ? data.url.value : this.url,
+      method: data.method.present ? data.method.value : this.method,
+      headers: data.headers.present ? data.headers.value : this.headers,
+      body: data.body.present ? data.body.value : this.body,
+      queryParams:
+          data.queryParams.present ? data.queryParams.value : this.queryParams,
+      description:
+          data.description.present ? data.description.value : this.description,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      retryCount:
+          data.retryCount.present ? data.retryCount.value : this.retryCount,
+      status: data.status.present ? data.status.value : this.status,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingRequestsTableData(')
+          ..write('id: $id, ')
+          ..write('url: $url, ')
+          ..write('method: $method, ')
+          ..write('headers: $headers, ')
+          ..write('body: $body, ')
+          ..write('queryParams: $queryParams, ')
+          ..write('description: $description, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('retryCount: $retryCount, ')
+          ..write('status: $status')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, url, method, headers, body, queryParams,
+      description, createdAt, retryCount, status);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PendingRequestsTableData &&
+          other.id == this.id &&
+          other.url == this.url &&
+          other.method == this.method &&
+          other.headers == this.headers &&
+          other.body == this.body &&
+          other.queryParams == this.queryParams &&
+          other.description == this.description &&
+          other.createdAt == this.createdAt &&
+          other.retryCount == this.retryCount &&
+          other.status == this.status);
+}
+
+class PendingRequestsTableCompanion
+    extends UpdateCompanion<PendingRequestsTableData> {
+  final Value<int> id;
+  final Value<String> url;
+  final Value<String> method;
+  final Value<String?> headers;
+  final Value<String?> body;
+  final Value<String?> queryParams;
+  final Value<String> description;
+  final Value<DateTime> createdAt;
+  final Value<int> retryCount;
+  final Value<String> status;
+  const PendingRequestsTableCompanion({
+    this.id = const Value.absent(),
+    this.url = const Value.absent(),
+    this.method = const Value.absent(),
+    this.headers = const Value.absent(),
+    this.body = const Value.absent(),
+    this.queryParams = const Value.absent(),
+    this.description = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.retryCount = const Value.absent(),
+    this.status = const Value.absent(),
+  });
+  PendingRequestsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String url,
+    required String method,
+    this.headers = const Value.absent(),
+    this.body = const Value.absent(),
+    this.queryParams = const Value.absent(),
+    this.description = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.retryCount = const Value.absent(),
+    this.status = const Value.absent(),
+  })  : url = Value(url),
+        method = Value(method);
+  static Insertable<PendingRequestsTableData> custom({
+    Expression<int>? id,
+    Expression<String>? url,
+    Expression<String>? method,
+    Expression<String>? headers,
+    Expression<String>? body,
+    Expression<String>? queryParams,
+    Expression<String>? description,
+    Expression<DateTime>? createdAt,
+    Expression<int>? retryCount,
+    Expression<String>? status,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (url != null) 'url': url,
+      if (method != null) 'method': method,
+      if (headers != null) 'headers': headers,
+      if (body != null) 'body': body,
+      if (queryParams != null) 'query_params': queryParams,
+      if (description != null) 'description': description,
+      if (createdAt != null) 'created_at': createdAt,
+      if (retryCount != null) 'retry_count': retryCount,
+      if (status != null) 'status': status,
+    });
+  }
+
+  PendingRequestsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? url,
+      Value<String>? method,
+      Value<String?>? headers,
+      Value<String?>? body,
+      Value<String?>? queryParams,
+      Value<String>? description,
+      Value<DateTime>? createdAt,
+      Value<int>? retryCount,
+      Value<String>? status}) {
+    return PendingRequestsTableCompanion(
+      id: id ?? this.id,
+      url: url ?? this.url,
+      method: method ?? this.method,
+      headers: headers ?? this.headers,
+      body: body ?? this.body,
+      queryParams: queryParams ?? this.queryParams,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      retryCount: retryCount ?? this.retryCount,
+      status: status ?? this.status,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (url.present) {
+      map['url'] = Variable<String>(url.value);
+    }
+    if (method.present) {
+      map['method'] = Variable<String>(method.value);
+    }
+    if (headers.present) {
+      map['headers'] = Variable<String>(headers.value);
+    }
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
+    }
+    if (queryParams.present) {
+      map['query_params'] = Variable<String>(queryParams.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (retryCount.present) {
+      map['retry_count'] = Variable<int>(retryCount.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingRequestsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('url: $url, ')
+          ..write('method: $method, ')
+          ..write('headers: $headers, ')
+          ..write('body: $body, ')
+          ..write('queryParams: $queryParams, ')
+          ..write('description: $description, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('retryCount: $retryCount, ')
+          ..write('status: $status')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1378,12 +1880,20 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $FavouritesTableTable(this);
   late final $CategoriesTableTable categoriesTable =
       $CategoriesTableTable(this);
+  late final $PendingRequestsTableTable pendingRequestsTable =
+      $PendingRequestsTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [userTable, productsTable, cartTable, favouritesTable, categoriesTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        userTable,
+        productsTable,
+        cartTable,
+        favouritesTable,
+        categoriesTable,
+        pendingRequestsTable
+      ];
 }
 
 typedef $$UserTableTableCreateCompanionBuilder = UserTableCompanion Function({
@@ -2064,6 +2574,236 @@ typedef $$CategoriesTableTableProcessedTableManager = ProcessedTableManager<
     ),
     CategoriesTableData,
     PrefetchHooks Function()>;
+typedef $$PendingRequestsTableTableCreateCompanionBuilder
+    = PendingRequestsTableCompanion Function({
+  Value<int> id,
+  required String url,
+  required String method,
+  Value<String?> headers,
+  Value<String?> body,
+  Value<String?> queryParams,
+  Value<String> description,
+  Value<DateTime> createdAt,
+  Value<int> retryCount,
+  Value<String> status,
+});
+typedef $$PendingRequestsTableTableUpdateCompanionBuilder
+    = PendingRequestsTableCompanion Function({
+  Value<int> id,
+  Value<String> url,
+  Value<String> method,
+  Value<String?> headers,
+  Value<String?> body,
+  Value<String?> queryParams,
+  Value<String> description,
+  Value<DateTime> createdAt,
+  Value<int> retryCount,
+  Value<String> status,
+});
+
+class $$PendingRequestsTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $PendingRequestsTableTable> {
+  $$PendingRequestsTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get url => $state.composableBuilder(
+      column: $state.table.url,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get method => $state.composableBuilder(
+      column: $state.table.method,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get headers => $state.composableBuilder(
+      column: $state.table.headers,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get body => $state.composableBuilder(
+      column: $state.table.body,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get queryParams => $state.composableBuilder(
+      column: $state.table.queryParams,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get description => $state.composableBuilder(
+      column: $state.table.description,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get createdAt => $state.composableBuilder(
+      column: $state.table.createdAt,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get retryCount => $state.composableBuilder(
+      column: $state.table.retryCount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get status => $state.composableBuilder(
+      column: $state.table.status,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$PendingRequestsTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $PendingRequestsTableTable> {
+  $$PendingRequestsTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get url => $state.composableBuilder(
+      column: $state.table.url,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get method => $state.composableBuilder(
+      column: $state.table.method,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get headers => $state.composableBuilder(
+      column: $state.table.headers,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get body => $state.composableBuilder(
+      column: $state.table.body,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get queryParams => $state.composableBuilder(
+      column: $state.table.queryParams,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get description => $state.composableBuilder(
+      column: $state.table.description,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get createdAt => $state.composableBuilder(
+      column: $state.table.createdAt,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get retryCount => $state.composableBuilder(
+      column: $state.table.retryCount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get status => $state.composableBuilder(
+      column: $state.table.status,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+class $$PendingRequestsTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PendingRequestsTableTable,
+    PendingRequestsTableData,
+    $$PendingRequestsTableTableFilterComposer,
+    $$PendingRequestsTableTableOrderingComposer,
+    $$PendingRequestsTableTableCreateCompanionBuilder,
+    $$PendingRequestsTableTableUpdateCompanionBuilder,
+    (
+      PendingRequestsTableData,
+      BaseReferences<_$AppDatabase, $PendingRequestsTableTable,
+          PendingRequestsTableData>
+    ),
+    PendingRequestsTableData,
+    PrefetchHooks Function()> {
+  $$PendingRequestsTableTableTableManager(
+      _$AppDatabase db, $PendingRequestsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer: $$PendingRequestsTableTableFilterComposer(
+              ComposerState(db, table)),
+          orderingComposer: $$PendingRequestsTableTableOrderingComposer(
+              ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> url = const Value.absent(),
+            Value<String> method = const Value.absent(),
+            Value<String?> headers = const Value.absent(),
+            Value<String?> body = const Value.absent(),
+            Value<String?> queryParams = const Value.absent(),
+            Value<String> description = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> retryCount = const Value.absent(),
+            Value<String> status = const Value.absent(),
+          }) =>
+              PendingRequestsTableCompanion(
+            id: id,
+            url: url,
+            method: method,
+            headers: headers,
+            body: body,
+            queryParams: queryParams,
+            description: description,
+            createdAt: createdAt,
+            retryCount: retryCount,
+            status: status,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String url,
+            required String method,
+            Value<String?> headers = const Value.absent(),
+            Value<String?> body = const Value.absent(),
+            Value<String?> queryParams = const Value.absent(),
+            Value<String> description = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> retryCount = const Value.absent(),
+            Value<String> status = const Value.absent(),
+          }) =>
+              PendingRequestsTableCompanion.insert(
+            id: id,
+            url: url,
+            method: method,
+            headers: headers,
+            body: body,
+            queryParams: queryParams,
+            description: description,
+            createdAt: createdAt,
+            retryCount: retryCount,
+            status: status,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$PendingRequestsTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$AppDatabase,
+        $PendingRequestsTableTable,
+        PendingRequestsTableData,
+        $$PendingRequestsTableTableFilterComposer,
+        $$PendingRequestsTableTableOrderingComposer,
+        $$PendingRequestsTableTableCreateCompanionBuilder,
+        $$PendingRequestsTableTableUpdateCompanionBuilder,
+        (
+          PendingRequestsTableData,
+          BaseReferences<_$AppDatabase, $PendingRequestsTableTable,
+              PendingRequestsTableData>
+        ),
+        PendingRequestsTableData,
+        PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2078,4 +2818,6 @@ class $AppDatabaseManager {
       $$FavouritesTableTableTableManager(_db, _db.favouritesTable);
   $$CategoriesTableTableTableManager get categoriesTable =>
       $$CategoriesTableTableTableManager(_db, _db.categoriesTable);
+  $$PendingRequestsTableTableTableManager get pendingRequestsTable =>
+      $$PendingRequestsTableTableTableManager(_db, _db.pendingRequestsTable);
 }

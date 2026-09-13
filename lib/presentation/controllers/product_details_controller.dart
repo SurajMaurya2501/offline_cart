@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:offline_cart/data/local/database/app_database.dart';
+import 'package:offline_cart/data/network/cart_api_service.dart';
 
 class ProductDetailsController extends GetxController {
   final int productId;
   final AppDatabase _db;
+  final CartApiService _cartApi;
 
   final product = Rxn<ProductsTableData>();
   final isLoading = true.obs;
@@ -18,8 +20,12 @@ class ProductDetailsController extends GetxController {
   StreamSubscription? _favSub;
   StreamSubscription? _cartSub;
 
-  ProductDetailsController({required this.productId, AppDatabase? database})
-    : _db = database ?? AppDatabase.instance;
+  ProductDetailsController({
+    required this.productId,
+    AppDatabase? database,
+    CartApiService? cartApiService,
+  }) : _db = database ?? AppDatabase.instance,
+       _cartApi = cartApiService ?? CartApiService();
 
   @override
   void onInit() {
@@ -77,6 +83,14 @@ class ProductDetailsController extends GetxController {
 
   Future<void> addToCart() async {
     await _db.cartDao.addToCart(productId);
+    _cartApi
+        .addToCart(
+          productId: productId,
+          quantity: 1,
+          productTitle: product.value?.title,
+        )
+        .catchError((_) => null);
+
     Get.rawSnackbar(
       message: 'Product added to cart',
       duration: const Duration(seconds: 2),

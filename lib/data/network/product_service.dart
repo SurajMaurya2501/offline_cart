@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:offline_cart/data/models/categories_model.dart';
 import 'package:offline_cart/data/models/product_model.dart';
+import 'package:offline_cart/data/network/dio_client.dart';
 
 class ProductService {
-  final _dio = Dio(BaseOptions(baseUrl: 'https://dummyjson.com/'));
+  final Dio _dio;
+
+  ProductService({Dio? dio}) : _dio = dio ?? DioClient.instance.dio;
 
   Future<List<CategoryModel>> getCategories({
     Function(int, int)? onReceiveProgress,
