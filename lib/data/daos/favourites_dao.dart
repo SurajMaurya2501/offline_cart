@@ -47,14 +47,6 @@ class FavouritesDao extends DatabaseAccessor<AppDatabase>
     }
   }
 
-  Future<List<FavouritesTableData>> getAllFavourites() {
-    return select(favouritesTable).get();
-  }
-
-  Stream<List<FavouritesTableData>> watchAllFavourites() {
-    return select(favouritesTable).watch();
-  }
-
   Stream<List<ProductsTableData>> watchFavouriteProducts() {
     final query = db.select(db.productsTable).join([
       innerJoin(
@@ -65,21 +57,5 @@ class FavouritesDao extends DatabaseAccessor<AppDatabase>
     return query.watch().map(
       (rows) => rows.map((r) => r.readTable(db.productsTable)).toList(),
     );
-  }
-
-  Future<List<ProductsTableData>> getFavouriteProducts() {
-    final query = db.select(db.productsTable).join([
-      innerJoin(
-        favouritesTable,
-        favouritesTable.productId.equalsExp(db.productsTable.id),
-      ),
-    ]);
-    return query.get().then(
-      (rows) => rows.map((r) => r.readTable(db.productsTable)).toList(),
-    );
-  }
-
-  Future<int> clearFavourites() {
-    return delete(favouritesTable).go();
   }
 }

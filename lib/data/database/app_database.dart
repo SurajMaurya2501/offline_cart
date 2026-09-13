@@ -5,7 +5,7 @@ import 'package:offline_cart/data/daos/category_dao.dart';
 import 'package:offline_cart/data/daos/favourites_dao.dart';
 import 'package:offline_cart/data/daos/products_dao.dart';
 import 'package:offline_cart/data/daos/user_dao.dart';
-import 'package:offline_cart/data/tables/categories_tabel.dart';
+import 'package:offline_cart/data/tables/categories_table.dart';
 import 'package:offline_cart/data/tables/cart_table.dart';
 import 'package:offline_cart/data/tables/favourites_table.dart';
 import 'package:offline_cart/data/tables/products_table.dart';
@@ -19,7 +19,7 @@ part 'app_database.g.dart';
     ProductsTable,
     CartTable,
     FavouritesTable,
-    CategoriesTabel,
+    CategoriesTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -55,7 +55,7 @@ class AppDatabase extends _$AppDatabase {
       await delete(cartTable).go();
       await delete(favouritesTable).go();
       await delete(productsTable).go();
-      await delete(categoriesTabel).go();
+      await delete(categoriesTable).go();
       await delete(userTable).go();
     });
   }

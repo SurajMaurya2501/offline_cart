@@ -1,65 +1,35 @@
 import 'package:drift/drift.dart';
 import 'package:offline_cart/data/database/app_database.dart';
-import 'package:offline_cart/data/tables/categories_tabel.dart';
-import 'package:offline_cart/models/categories_model.dart';
+import 'package:offline_cart/data/tables/categories_table.dart';
+import 'package:offline_cart/data/models/categories_model.dart';
 
 part 'category_dao.g.dart';
 
-@DriftAccessor(tables: [CategoriesTabel])
+@DriftAccessor(tables: [CategoriesTable])
 class CategoryDao extends DatabaseAccessor<AppDatabase>
     with _$CategoryDaoMixin {
   CategoryDao(super.db);
 
-  Future<void> saveCategory(CategoriesTabelCompanion category) =>
-      into(categoriesTabel).insert(
-        category,
-        onConflict: DoUpdate((_) => category, target: [categoriesTabel.slug]),
-      );
-
-  Future<void> saveCategories(List<CategoriesTabelCompanion> categories) async {
+  Future<void> saveCategories(List<CategoriesTableCompanion> categories) async {
     await batch((batch) {
       batch.insertAll(
-        categoriesTabel,
+        categoriesTable,
         categories,
         mode: InsertMode.insertOrReplace,
       );
     });
   }
 
-  Future<CategoriesTabelData?> getCategoryBySlug(String slug) => (select(
-    categoriesTabel,
-  )..where((t) => t.slug.equals(slug))).getSingleOrNull();
-
-  Future<List<CategoriesTabelData>> getAllCategories() =>
-      select(categoriesTabel).get();
-
-  Stream<List<CategoriesTabelData>> watchAllCategories() =>
-      select(categoriesTabel).watch();
-
-  Future<int> deleteCategory(String slug) =>
-      (delete(categoriesTabel)..where((t) => t.slug.equals(slug))).go();
-
-  Future<int> deleteAllCategories() => delete(categoriesTabel).go();
-
-  Future<void> saveCategoryModel(CategoryModel category) =>
-      saveCategory(category.toCompanion());
-
-  Future<void> saveCategoryModels(List<CategoryModel> categories) =>
-      saveCategories(categories.map((c) => c.toCompanion()).toList());
+  Stream<List<CategoriesTableData>> watchAllCategories() =>
+      select(categoriesTable).watch();
 }
 
 extension CategoryModelCompanionX on CategoryModel {
-  CategoriesTabelCompanion toCompanion() {
-    return CategoriesTabelCompanion.insert(
+  CategoriesTableCompanion toCompanion() {
+    return CategoriesTableCompanion.insert(
       slug: slug,
       name: name,
       url: Value(url),
     );
-  }
-}
-
-extension CategoriesTabelDataX on CategoriesTabelData {
-  CategoryModel toModel() {
-    return CategoryModel(slug: slug, name: name, url: url ?? '');
   }
 }

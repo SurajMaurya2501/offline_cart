@@ -1137,12 +1137,12 @@ class FavouritesTableCompanion extends UpdateCompanion<FavouritesTableData> {
   }
 }
 
-class $CategoriesTabelTable extends CategoriesTabel
-    with TableInfo<$CategoriesTabelTable, CategoriesTabelData> {
+class $CategoriesTableTable extends CategoriesTable
+    with TableInfo<$CategoriesTableTable, CategoriesTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CategoriesTabelTable(this.attachedDatabase, [this._alias]);
+  $CategoriesTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _slugMeta = const VerificationMeta('slug');
   @override
   late final GeneratedColumn<String> slug = GeneratedColumn<String>(
@@ -1164,10 +1164,10 @@ class $CategoriesTabelTable extends CategoriesTabel
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'categories_tabel';
+  static const String $name = 'categories_table';
   @override
   VerificationContext validateIntegrity(
-      Insertable<CategoriesTabelData> instance,
+      Insertable<CategoriesTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1193,9 +1193,9 @@ class $CategoriesTabelTable extends CategoriesTabel
   @override
   Set<GeneratedColumn> get $primaryKey => {slug};
   @override
-  CategoriesTabelData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  CategoriesTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return CategoriesTabelData(
+    return CategoriesTableData(
       slug: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}slug'])!,
       name: attachedDatabase.typeMapping
@@ -1206,17 +1206,17 @@ class $CategoriesTabelTable extends CategoriesTabel
   }
 
   @override
-  $CategoriesTabelTable createAlias(String alias) {
-    return $CategoriesTabelTable(attachedDatabase, alias);
+  $CategoriesTableTable createAlias(String alias) {
+    return $CategoriesTableTable(attachedDatabase, alias);
   }
 }
 
-class CategoriesTabelData extends DataClass
-    implements Insertable<CategoriesTabelData> {
+class CategoriesTableData extends DataClass
+    implements Insertable<CategoriesTableData> {
   final String slug;
   final String name;
   final String? url;
-  const CategoriesTabelData({required this.slug, required this.name, this.url});
+  const CategoriesTableData({required this.slug, required this.name, this.url});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1228,18 +1228,18 @@ class CategoriesTabelData extends DataClass
     return map;
   }
 
-  CategoriesTabelCompanion toCompanion(bool nullToAbsent) {
-    return CategoriesTabelCompanion(
+  CategoriesTableCompanion toCompanion(bool nullToAbsent) {
+    return CategoriesTableCompanion(
       slug: Value(slug),
       name: Value(name),
       url: url == null && nullToAbsent ? const Value.absent() : Value(url),
     );
   }
 
-  factory CategoriesTabelData.fromJson(Map<String, dynamic> json,
+  factory CategoriesTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return CategoriesTabelData(
+    return CategoriesTableData(
       slug: serializer.fromJson<String>(json['slug']),
       name: serializer.fromJson<String>(json['name']),
       url: serializer.fromJson<String?>(json['url']),
@@ -1255,17 +1255,17 @@ class CategoriesTabelData extends DataClass
     };
   }
 
-  CategoriesTabelData copyWith(
+  CategoriesTableData copyWith(
           {String? slug,
           String? name,
           Value<String?> url = const Value.absent()}) =>
-      CategoriesTabelData(
+      CategoriesTableData(
         slug: slug ?? this.slug,
         name: name ?? this.name,
         url: url.present ? url.value : this.url,
       );
-  CategoriesTabelData copyWithCompanion(CategoriesTabelCompanion data) {
-    return CategoriesTabelData(
+  CategoriesTableData copyWithCompanion(CategoriesTableCompanion data) {
+    return CategoriesTableData(
       slug: data.slug.present ? data.slug.value : this.slug,
       name: data.name.present ? data.name.value : this.name,
       url: data.url.present ? data.url.value : this.url,
@@ -1274,7 +1274,7 @@ class CategoriesTabelData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('CategoriesTabelData(')
+    return (StringBuffer('CategoriesTableData(')
           ..write('slug: $slug, ')
           ..write('name: $name, ')
           ..write('url: $url')
@@ -1287,31 +1287,31 @@ class CategoriesTabelData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is CategoriesTabelData &&
+      (other is CategoriesTableData &&
           other.slug == this.slug &&
           other.name == this.name &&
           other.url == this.url);
 }
 
-class CategoriesTabelCompanion extends UpdateCompanion<CategoriesTabelData> {
+class CategoriesTableCompanion extends UpdateCompanion<CategoriesTableData> {
   final Value<String> slug;
   final Value<String> name;
   final Value<String?> url;
   final Value<int> rowid;
-  const CategoriesTabelCompanion({
+  const CategoriesTableCompanion({
     this.slug = const Value.absent(),
     this.name = const Value.absent(),
     this.url = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  CategoriesTabelCompanion.insert({
+  CategoriesTableCompanion.insert({
     required String slug,
     required String name,
     this.url = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : slug = Value(slug),
         name = Value(name);
-  static Insertable<CategoriesTabelData> custom({
+  static Insertable<CategoriesTableData> custom({
     Expression<String>? slug,
     Expression<String>? name,
     Expression<String>? url,
@@ -1325,12 +1325,12 @@ class CategoriesTabelCompanion extends UpdateCompanion<CategoriesTabelData> {
     });
   }
 
-  CategoriesTabelCompanion copyWith(
+  CategoriesTableCompanion copyWith(
       {Value<String>? slug,
       Value<String>? name,
       Value<String?>? url,
       Value<int>? rowid}) {
-    return CategoriesTabelCompanion(
+    return CategoriesTableCompanion(
       slug: slug ?? this.slug,
       name: name ?? this.name,
       url: url ?? this.url,
@@ -1358,7 +1358,7 @@ class CategoriesTabelCompanion extends UpdateCompanion<CategoriesTabelData> {
 
   @override
   String toString() {
-    return (StringBuffer('CategoriesTabelCompanion(')
+    return (StringBuffer('CategoriesTableCompanion(')
           ..write('slug: $slug, ')
           ..write('name: $name, ')
           ..write('url: $url, ')
@@ -1376,14 +1376,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CartTableTable cartTable = $CartTableTable(this);
   late final $FavouritesTableTable favouritesTable =
       $FavouritesTableTable(this);
-  late final $CategoriesTabelTable categoriesTabel =
-      $CategoriesTabelTable(this);
+  late final $CategoriesTableTable categoriesTable =
+      $CategoriesTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [userTable, productsTable, cartTable, favouritesTable, categoriesTabel];
+      [userTable, productsTable, cartTable, favouritesTable, categoriesTable];
 }
 
 typedef $$UserTableTableCreateCompanionBuilder = UserTableCompanion Function({
@@ -1943,14 +1943,14 @@ typedef $$FavouritesTableTableProcessedTableManager = ProcessedTableManager<
     ),
     FavouritesTableData,
     PrefetchHooks Function()>;
-typedef $$CategoriesTabelTableCreateCompanionBuilder = CategoriesTabelCompanion
+typedef $$CategoriesTableTableCreateCompanionBuilder = CategoriesTableCompanion
     Function({
   required String slug,
   required String name,
   Value<String?> url,
   Value<int> rowid,
 });
-typedef $$CategoriesTabelTableUpdateCompanionBuilder = CategoriesTabelCompanion
+typedef $$CategoriesTableTableUpdateCompanionBuilder = CategoriesTableCompanion
     Function({
   Value<String> slug,
   Value<String> name,
@@ -1958,9 +1958,9 @@ typedef $$CategoriesTabelTableUpdateCompanionBuilder = CategoriesTabelCompanion
   Value<int> rowid,
 });
 
-class $$CategoriesTabelTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $CategoriesTabelTable> {
-  $$CategoriesTabelTableFilterComposer(super.$state);
+class $$CategoriesTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $CategoriesTableTable> {
+  $$CategoriesTableTableFilterComposer(super.$state);
   ColumnFilters<String> get slug => $state.composableBuilder(
       column: $state.table.slug,
       builder: (column, joinBuilders) =>
@@ -1977,9 +1977,9 @@ class $$CategoriesTabelTableFilterComposer
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
 
-class $$CategoriesTabelTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $CategoriesTabelTable> {
-  $$CategoriesTabelTableOrderingComposer(super.$state);
+class $$CategoriesTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $CategoriesTableTable> {
+  $$CategoriesTableTableOrderingComposer(super.$state);
   ColumnOrderings<String> get slug => $state.composableBuilder(
       column: $state.table.slug,
       builder: (column, joinBuilders) =>
@@ -1996,36 +1996,36 @@ class $$CategoriesTabelTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-class $$CategoriesTabelTableTableManager extends RootTableManager<
+class $$CategoriesTableTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $CategoriesTabelTable,
-    CategoriesTabelData,
-    $$CategoriesTabelTableFilterComposer,
-    $$CategoriesTabelTableOrderingComposer,
-    $$CategoriesTabelTableCreateCompanionBuilder,
-    $$CategoriesTabelTableUpdateCompanionBuilder,
+    $CategoriesTableTable,
+    CategoriesTableData,
+    $$CategoriesTableTableFilterComposer,
+    $$CategoriesTableTableOrderingComposer,
+    $$CategoriesTableTableCreateCompanionBuilder,
+    $$CategoriesTableTableUpdateCompanionBuilder,
     (
-      CategoriesTabelData,
-      BaseReferences<_$AppDatabase, $CategoriesTabelTable, CategoriesTabelData>
+      CategoriesTableData,
+      BaseReferences<_$AppDatabase, $CategoriesTableTable, CategoriesTableData>
     ),
-    CategoriesTabelData,
+    CategoriesTableData,
     PrefetchHooks Function()> {
-  $$CategoriesTabelTableTableManager(
-      _$AppDatabase db, $CategoriesTabelTable table)
+  $$CategoriesTableTableTableManager(
+      _$AppDatabase db, $CategoriesTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           filteringComposer:
-              $$CategoriesTabelTableFilterComposer(ComposerState(db, table)),
+              $$CategoriesTableTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
-              $$CategoriesTabelTableOrderingComposer(ComposerState(db, table)),
+              $$CategoriesTableTableOrderingComposer(ComposerState(db, table)),
           updateCompanionCallback: ({
             Value<String> slug = const Value.absent(),
             Value<String> name = const Value.absent(),
             Value<String?> url = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
-              CategoriesTabelCompanion(
+              CategoriesTableCompanion(
             slug: slug,
             name: name,
             url: url,
@@ -2037,7 +2037,7 @@ class $$CategoriesTabelTableTableManager extends RootTableManager<
             Value<String?> url = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
-              CategoriesTabelCompanion.insert(
+              CategoriesTableCompanion.insert(
             slug: slug,
             name: name,
             url: url,
@@ -2050,19 +2050,19 @@ class $$CategoriesTabelTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$CategoriesTabelTableProcessedTableManager = ProcessedTableManager<
+typedef $$CategoriesTableTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $CategoriesTabelTable,
-    CategoriesTabelData,
-    $$CategoriesTabelTableFilterComposer,
-    $$CategoriesTabelTableOrderingComposer,
-    $$CategoriesTabelTableCreateCompanionBuilder,
-    $$CategoriesTabelTableUpdateCompanionBuilder,
+    $CategoriesTableTable,
+    CategoriesTableData,
+    $$CategoriesTableTableFilterComposer,
+    $$CategoriesTableTableOrderingComposer,
+    $$CategoriesTableTableCreateCompanionBuilder,
+    $$CategoriesTableTableUpdateCompanionBuilder,
     (
-      CategoriesTabelData,
-      BaseReferences<_$AppDatabase, $CategoriesTabelTable, CategoriesTabelData>
+      CategoriesTableData,
+      BaseReferences<_$AppDatabase, $CategoriesTableTable, CategoriesTableData>
     ),
-    CategoriesTabelData,
+    CategoriesTableData,
     PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
@@ -2076,6 +2076,6 @@ class $AppDatabaseManager {
       $$CartTableTableTableManager(_db, _db.cartTable);
   $$FavouritesTableTableTableManager get favouritesTable =>
       $$FavouritesTableTableTableManager(_db, _db.favouritesTable);
-  $$CategoriesTabelTableTableManager get categoriesTabel =>
-      $$CategoriesTabelTableTableManager(_db, _db.categoriesTabel);
+  $$CategoriesTableTableTableManager get categoriesTable =>
+      $$CategoriesTableTableTableManager(_db, _db.categoriesTable);
 }

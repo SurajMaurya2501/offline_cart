@@ -43,28 +43,10 @@ class CartDao extends DatabaseAccessor<AppDatabase> with _$CartDaoMixin {
     )..where((t) => t.productId.equals(productId))).go();
   }
 
-  Future<CartTableData?> getCartItem(int productId) {
-    return (select(
-      cartTable,
-    )..where((t) => t.productId.equals(productId))).getSingleOrNull();
-  }
-
   Stream<CartTableData?> watchCartItem(int productId) {
     return (select(
       cartTable,
     )..where((t) => t.productId.equals(productId))).watchSingleOrNull();
-  }
-
-  Stream<bool> watchIsProductInCart(int productId) {
-    return watchCartItem(productId).map((item) => item != null);
-  }
-
-  Future<List<CartTableData>> getAllCartItems() {
-    return select(cartTable).get();
-  }
-
-  Stream<List<CartTableData>> watchAllCartItems() {
-    return select(cartTable).watch();
   }
 
   Stream<List<CartItemWithProduct>> watchCartWithProducts() {
@@ -75,25 +57,6 @@ class CartDao extends DatabaseAccessor<AppDatabase> with _$CartDaoMixin {
       ),
     ]);
     return query.watch().map(
-      (rows) => rows
-          .map(
-            (r) => CartItemWithProduct(
-              cartItem: r.readTable(cartTable),
-              product: r.readTable(db.productsTable),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  Future<List<CartItemWithProduct>> getCartWithProducts() {
-    final query = select(cartTable).join([
-      innerJoin(
-        db.productsTable,
-        db.productsTable.id.equalsExp(cartTable.productId),
-      ),
-    ]);
-    return query.get().then(
       (rows) => rows
           .map(
             (r) => CartItemWithProduct(

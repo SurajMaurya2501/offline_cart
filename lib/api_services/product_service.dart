@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:offline_cart/models/categories_model.dart';
-import 'package:offline_cart/models/product_model.dart';
+import 'package:offline_cart/data/models/categories_model.dart';
+import 'package:offline_cart/data/models/product_model.dart';
 
 class ProductService {
   final _dio = Dio(BaseOptions(baseUrl: 'https://dummyjson.com/'));
