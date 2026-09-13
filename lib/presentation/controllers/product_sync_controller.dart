@@ -14,10 +14,16 @@ class ProductSyncController extends GetxController {
   final CategoryDao _categoryDao;
   final ProductsDao _productDao;
 
-  ProductSyncController({ProductService? productService, AppDatabase? database})
-    : _productApiService = productService ?? ProductService(),
-      _categoryDao = (database ?? AppDatabase.instance).categoryDao,
-      _productDao = (database ?? AppDatabase.instance).productsDao;
+  ProductSyncController({
+    ProductService? productService,
+    AppDatabase? database,
+    CategoryDao? categoryDao,
+    ProductsDao? productsDao,
+  }) : _productApiService = productService ?? ProductService(),
+       _categoryDao =
+           categoryDao ?? (database ?? AppDatabase.instance).categoryDao,
+       _productDao =
+           productsDao ?? (database ?? AppDatabase.instance).productsDao;
 
   final isSyncing = false.obs;
   final hasError = false.obs;
@@ -29,8 +35,15 @@ class ProductSyncController extends GetxController {
 
   CancelToken? cancelToken;
 
+  String _formatBytes(int bytes) {
+    if (bytes < 1024) return '$bytes B';
+    if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
+    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+  }
+
   Future<bool> syncCategories() async {
     try {
+      isCategoriesDone.value = false;
       currentStep.value = SyncStep.categories;
       statusText.value = 'Fetching categories...';
       progress.value = 0.0;
@@ -38,10 +51,23 @@ class ProductSyncController extends GetxController {
 
       final result = await _productApiService.getCategories(
         cancelToken: cancelToken,
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+            progress.value = received / total;
+            statusText.value =
+                'Downloading categories: ${(progress.value * 100).toInt()}% (${_formatBytes(received)}/${_formatBytes(total)})';
+          } else {
+            statusText.value =
+                'Downloading categories: ${_formatBytes(received)}';
+          }
+        },
       );
 
-      statusText.value = 'Saving categories...';
       final categoryCompanions = result.map((e) => e.toCompanion()).toList();
+      final totalCategories = categoryCompanions.length;
+      progress.value = 0.0;
+      statusText.value = 'Saving categories: (0/$totalCategories)';
+
       await _categoryDao.saveCategories(categoryCompanions);
 
       isCategoriesDone.value = true;
@@ -58,6 +84,7 @@ class ProductSyncController extends GetxController {
 
   Future<bool> syncProducts() async {
     try {
+      isProductsDone.value = false;
       currentStep.value = SyncStep.products;
       statusText.value = 'Fetching products...';
       progress.value = 0.0;
@@ -70,18 +97,21 @@ class ProductSyncController extends GetxController {
           if (total != -1) {
             progress.value = received / total;
             statusText.value =
-                'Downloading products: ${(progress.value * 100).toInt()}%';
+                'Downloading products: ${(progress.value * 100).toInt()}% (${_formatBytes(received)}/${_formatBytes(total)})';
           } else {
             statusText.value =
-                'Downloading products: ${(received / 1024).toStringAsFixed(0)} KB';
+                'Downloading products: ${_formatBytes(received)}';
           }
         },
       );
 
-      statusText.value = 'Saving products to your device...';
       final productCompanions = result.products
           .map((e) => e.toCompanion())
           .toList();
+      final totalProducts = productCompanions.length;
+      progress.value = 0.0;
+      statusText.value = 'Saving products: (0/$totalProducts)';
+
       await _productDao.saveProducts(productCompanions);
 
       isProductsDone.value = true;
