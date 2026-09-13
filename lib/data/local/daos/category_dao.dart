@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:offline_cart/data/database/app_database.dart';
-import 'package:offline_cart/data/tables/categories_table.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
+import 'package:offline_cart/data/local/tables/categories_table.dart';
 import 'package:offline_cart/data/models/categories_model.dart';
 
 part 'category_dao.g.dart';

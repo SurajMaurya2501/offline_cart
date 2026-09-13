@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:offline_cart/data/database/app_database.dart';
-import 'package:offline_cart/data/tables/favourites_table.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
+import 'package:offline_cart/data/local/tables/favourites_table.dart';
 
 part 'favourites_dao.g.dart';
 

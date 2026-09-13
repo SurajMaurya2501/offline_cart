@@ -1,15 +1,15 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
-import 'package:offline_cart/data/daos/cart_dao.dart';
-import 'package:offline_cart/data/daos/category_dao.dart';
-import 'package:offline_cart/data/daos/favourites_dao.dart';
-import 'package:offline_cart/data/daos/products_dao.dart';
-import 'package:offline_cart/data/daos/user_dao.dart';
-import 'package:offline_cart/data/tables/categories_table.dart';
-import 'package:offline_cart/data/tables/cart_table.dart';
-import 'package:offline_cart/data/tables/favourites_table.dart';
-import 'package:offline_cart/data/tables/products_table.dart';
-import 'package:offline_cart/data/tables/user_table.dart';
+import 'package:offline_cart/data/local/daos/cart_dao.dart';
+import 'package:offline_cart/data/local/daos/category_dao.dart';
+import 'package:offline_cart/data/local/daos/favourites_dao.dart';
+import 'package:offline_cart/data/local/daos/products_dao.dart';
+import 'package:offline_cart/data/local/daos/user_dao.dart';
+import 'package:offline_cart/data/local/tables/categories_table.dart';
+import 'package:offline_cart/data/local/tables/cart_table.dart';
+import 'package:offline_cart/data/local/tables/favourites_table.dart';
+import 'package:offline_cart/data/local/tables/products_table.dart';
+import 'package:offline_cart/data/local/tables/user_table.dart';
 
 part 'app_database.g.dart';
 
@@ -27,13 +27,6 @@ class AppDatabase extends _$AppDatabase {
 
   AppDatabase._internal([QueryExecutor? executor])
     : super(executor ?? _openConnection());
-
-  factory AppDatabase([QueryExecutor? executor]) {
-    if (executor != null) {
-      return AppDatabase._internal(executor);
-    }
-    return _instance ??= AppDatabase._internal();
-  }
 
   static AppDatabase get instance => _instance ??= AppDatabase._internal();
 

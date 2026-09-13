@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:offline_cart/data/database/app_database.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
 
 class FavouritesController extends GetxController {
   final AppDatabase _db = AppDatabase.instance;

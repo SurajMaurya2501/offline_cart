@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:offline_cart/data/database/app_database.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductsTableData product;

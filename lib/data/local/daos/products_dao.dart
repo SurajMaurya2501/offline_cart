@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:offline_cart/data/database/app_database.dart';
-import 'package:offline_cart/data/tables/products_table.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
+import 'package:offline_cart/data/local/tables/products_table.dart';
 import 'package:offline_cart/data/models/product_model.dart';
 
 part 'products_dao.g.dart';

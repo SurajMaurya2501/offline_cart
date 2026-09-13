@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:offline_cart/presentation/controllers/product_sync_controller.dart';
-import 'package:offline_cart/core/services/auth_service.dart';
-import 'package:offline_cart/data/daos/user_dao.dart';
-import 'package:offline_cart/data/database/app_database.dart';
+import 'package:offline_cart/data/network/auth_service.dart';
+import 'package:offline_cart/data/local/daos/user_dao.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
 import 'package:offline_cart/data/models/user_model.dart';
 import 'package:offline_cart/presentation/screens/dashboard/dashboard_screen.dart';
 import 'package:offline_cart/presentation/widgets/sync_progress_dialog.dart';
 
 class AuthController extends GetxController {
   final AuthService _authService = AuthService();
-  final UserDao _userDao = AppDatabase().userDao;
+  final UserDao _userDao = AppDatabase.instance.userDao;
   final ProductSyncController _syncController = Get.put(
     ProductSyncController(),
   );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:offline_cart/presentation/controllers/auth_controller.dart';
-import 'package:offline_cart/data/database/app_database.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
 import 'package:offline_cart/presentation/screens/auth/login_screen.dart';
 import 'package:offline_cart/presentation/screens/dashboard/dashboard_screen.dart';
 

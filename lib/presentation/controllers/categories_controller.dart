@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:offline_cart/api_services/product_service.dart';
-import 'package:offline_cart/data/daos/category_dao.dart';
-import 'package:offline_cart/data/database/app_database.dart';
+import 'package:offline_cart/data/network/product_service.dart';
+import 'package:offline_cart/data/local/daos/category_dao.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
 
 class CategoriesController extends GetxController {
   final _productApiService = ProductService();
-  final _categoryDao = AppDatabase().categoryDao;
+  final _categoryDao = AppDatabase.instance.categoryDao;
 
   final isSyncing = false.obs;
   final progress = 0.0.obs;

@@ -2,17 +2,22 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:offline_cart/api_services/product_service.dart';
-import 'package:offline_cart/data/daos/category_dao.dart';
-import 'package:offline_cart/data/daos/products_dao.dart';
-import 'package:offline_cart/data/database/app_database.dart';
+import 'package:offline_cart/data/network/product_service.dart';
+import 'package:offline_cart/data/local/daos/category_dao.dart';
+import 'package:offline_cart/data/local/daos/products_dao.dart';
+import 'package:offline_cart/data/local/database/app_database.dart';
 
 enum SyncStep { idle, categories, products, completed, error, noInternet }
 
 class ProductSyncController extends GetxController {
-  final _productApiService = ProductService();
-  final _categoryDao = AppDatabase().categoryDao;
-  final _productDao = AppDatabase().productsDao;
+  final ProductService _productApiService;
+  final CategoryDao _categoryDao;
+  final ProductsDao _productDao;
+
+  ProductSyncController({ProductService? productService, AppDatabase? database})
+    : _productApiService = productService ?? ProductService(),
+      _categoryDao = (database ?? AppDatabase.instance).categoryDao,
+      _productDao = (database ?? AppDatabase.instance).productsDao;
 
   final isSyncing = false.obs;
   final hasError = false.obs;
