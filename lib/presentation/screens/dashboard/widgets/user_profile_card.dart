@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:offline_cart/data/local/database/app_database.dart';
@@ -37,7 +38,7 @@ class UserProfileCard extends StatelessWidget {
                     radius: 40,
                     backgroundColor: const Color(0xFFEEF2FF),
                     backgroundImage: photo.isNotEmpty
-                        ? NetworkImage(photo)
+                        ? CachedNetworkImageProvider(photo)
                         : null,
                     child: photo.isEmpty
                         ? const Icon(
@@ -125,7 +126,7 @@ class UserProfileCard extends StatelessWidget {
                   radius: 30,
                   backgroundColor: const Color(0xFFEEF2FF),
                   backgroundImage: photo.isNotEmpty
-                      ? NetworkImage(photo)
+                      ? CachedNetworkImageProvider(photo)
                       : null,
                   child: photo.isEmpty
                       ? const Icon(
