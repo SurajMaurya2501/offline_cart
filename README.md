@@ -6,7 +6,7 @@ A Flutter application built as a product catalog with an **offline-first** appro
 
 ## What the App Does
 
-- **Google Sign-In & Session Persistence:** Users log in using their Google account. User details are saved locally in SQLite, so returning users skip the login screen and head straight to the dashboard.
+- **Google Sign-In & Session Persistence:** Users log in using their Google account. User details are saved locally in Drift, so returning users skip the login screen and head straight to the dashboard.
 - **Initial Sync (Non-Dismissible):** On first login (or when manually refreshed), the app downloads categories and up to 200 products from DummyJSON with a live progress dialog. If the network drops, users can retry without losing already-saved categories.
 - **Strictly Offline-First:** Screens never query the API directly. All screens listen to reactive Drift streams via GetX controllers. If you turn off Wi-Fi/mobile data, the whole app keeps working seamlessly.
 - **Dashboard:** Displays user profile details, total categories and products synced, last sync timestamp, and quick actions (view categories, refresh catalog, log out).
@@ -76,6 +76,13 @@ lib/
 │   └── widgets/               # Reusable dialogs (SyncProgressDialog)
 └── main.dart                  # App entry point
 ```
+
+## Future Improvements
+
+- **Auto-sync on reconnect** — listen for connectivity changes and trigger 
+  a background sync automatically when the device comes back online, 
+  instead of relying only on manual "Refresh Data"
+- **Pagination** — lazy-load products instead of fetching all 200 upfront
 
 ---
 
