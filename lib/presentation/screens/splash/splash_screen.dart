@@ -218,7 +218,7 @@ class _SplashScreenState extends State<SplashScreen>
                     child: Column(
                       children: [
                         const Text(
-                          'Product Catalog',
+                          'OfflineMart',
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w800,

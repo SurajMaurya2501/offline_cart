@@ -6,18 +6,18 @@ import 'presentation/screens/splash/splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const ProductCatalog());
+  runApp(const OfflineMartApp());
 }
 
-class ProductCatalog extends StatelessWidget {
+class OfflineMartApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  const ProductCatalog({super.key, this.isLoggedIn = false});
+  const OfflineMartApp({super.key, this.isLoggedIn = false});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Product Catalog',
+      title: 'OfflineMart',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

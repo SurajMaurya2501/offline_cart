@@ -1,6 +1,6 @@
-# Product Catalog (Offline-First)
+# OfflineMart (Offline-First)
 
-A Flutter application built as a product catalog with an **offline-first** approach. Once data is synced from the API, the app runs entirely out of a local SQLite database powered by **Drift**, with **GetX** handling state management and **Google Sign-In** managing user authentication.
+A Flutter application built as OfflineMart with an **offline-first** approach. Once data is synced from the API, the app runs entirely out of a local SQLite database powered by **Drift**, with **GetX** handling state management and **Google Sign-In** managing user authentication.
 
 ---
 

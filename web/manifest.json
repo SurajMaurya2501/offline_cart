@@ -1,6 +1,6 @@
 {
-    "name": "Product Catalog",
-    "short_name": "Product Catalog",
+    "name": "OfflineMart",
+    "short_name": "OfflineMart",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
