@@ -1,53 +1,43 @@
-# Product Catalog (Offline-First)
+# OfflineMart (Offline-First)
 
-A Flutter application built as a product catalog with an **offline-first** approach. Once data is synced from the API, the app runs entirely out of a local SQLite database powered by **Drift**, with **GetX** handling state management and **Google Sign-In** managing user authentication.
-
----
-
-## What the App Does
-
-- **Google Sign-In & Session Persistence:** Users log in using their Google account. User details are saved locally in SQLite, so returning users skip the login screen and head straight to the dashboard.
-- **Initial Sync (Non-Dismissible):** On first login (or when manually refreshed), the app downloads categories and up to 200 products from DummyJSON with a live progress dialog. If the network drops, users can retry without losing already-saved categories.
-- **Strictly Offline-First:** Screens never query the API directly. All screens listen to reactive Drift streams via GetX controllers. If you turn off Wi-Fi/mobile data, the whole app keeps working seamlessly.
-- **Dashboard:** Displays user profile details, total categories and products synced, last sync timestamp, and quick actions (view categories, refresh catalog, log out).
-- **Categories & Products:** 
-  - Browse categories via a bottom sheet or a horizontal chip slider.
-  - Search products in real time across title, brand, category, and description.
-  - Sort products by price (low-high, high-low) or rating (high-low, low-high).
-  - Pull-to-refresh to reload from the local database.
-- **Product Details:** Image carousel with page indicator, pricing, discount badges, stock counts, rating, and description.
-- **Favourites:** Add or remove items from the wishlist. Stored in SQLite and updated reactively across all screens.
-- **Cart & Totals:** Add items, update quantities with `+`/`-` buttons (auto-removes at zero), and see live calculations for item count, subtotal, discount, and grand total.
+A Flutter app built as OfflineMart with an **offline-first** approach. Data is synced once from the API into a local SQLite database (via **Drift**), then the whole app runs off that — with **GetX** for state management and **Google Sign-In** for auth.
 
 ---
 
-## Architecture
+## What It Does
 
-The project follows a clean offline-first pattern where the database acts as the single source of truth for the UI:
+- **Google Sign-In & Session Persistence** — log in once, session is saved locally, returning users skip straight to the dashboard.
+- **Initial Sync** — pulls categories and products from DummyJSON on first login with a progress dialog; retry-safe if the network drops mid-sync.
+- **Offline-First** — screens never call the API directly, they just watch Drift streams through GetX controllers, so the app works fully offline after sync.
+- **Dashboard** — profile, sync stats, last sync time, quick actions.
+- **Categories & Products** — browse, search, sort (price/rating), pull-to-refresh.
+- **Product Details** — image carousel, pricing, discount, stock, rating.
+- **Favourites** — reactive wishlist stored in SQLite.
+- **Cart** — quantity controls, live subtotal/discount/total.
 
-```mermaid
-flowchart LR
-    API[DummyJSON API] -->|Initial Sync / Refresh| DB[(Drift SQLite DB)]
-    DB -->|Reactive Streams| Controller[GetX Controllers]
-    Controller -->|Obx UI Binding| UI[Flutter Screens]
-```
+---
 
-```
-API ──(Sync)──> Drift Database ──(watch() Streams)──> GetX Controller ──> UI (Obx)
-```
+## Screenshots
 
-No screen or controller talks to the network for daily browsing. Network calls happen solely inside sync routines, write straight to the database, and the UI reacts to table changes automatically.
+| | | |
+|---|---|---|
+| [Splash](screenshots/splash_screen.jpeg) | [Login](screenshots/login_screen.jpeg) | [Initial Sync](screenshots/sync_initial_data.jpeg) |
+| [Dashboard](screenshots/dashboard_screen.jpeg) | [Manual Sync](screenshots/dashboard_manual_sync.jpeg) | [Categories](screenshots/categories.jpeg) |
+| [Products Listing](screenshots/products_listing.jpeg) | [Product Details](screenshots/product_details.jpeg) | [Favourites](screenshots/favorites.jpeg) |
+| [Cart](screenshots/cart.jpeg) | | |
+
+Architecture diagram: [docs/flutter_product_catalog_architecture.png](docs/flutter_product_catalog_architecture.png)
 
 ---
 
 ## Tech Stack
 
-- **Framework:** Flutter (Dart 3)
-- **State Management:** GetX
-- **Local Database:** Drift (SQLite) with DAOs and reactive queries (`watch()`)
-- **Networking:** Dio (used only during initial data sync)
-- **Authentication:** Google Sign-In & Firebase Core
-- **Connectivity:** `internet_connection_checker_plus`
+- Flutter (Dart 3)
+- GetX — state management
+- Drift (SQLite) — local DB with DAOs and `watch()` streams
+- Dio — networking (sync only)
+- Google Sign-In + Firebase Core — auth
+- `internet_connection_checker_plus` — connectivity
 
 ---
 
@@ -55,58 +45,35 @@ No screen or controller talks to the network for daily browsing. Network calls h
 
 ```text
 lib/
-├── core/
-│   └── extensions/            # Helper extensions (safe parsing)
+├── core/extensions/     # Helper extensions
 ├── data/
-│   ├── local/
-│   │   ├── daos/              # DAOs for cart, categories, favourites, products, user
-│   │   ├── database/          # Drift AppDatabase setup
-│   │   └── tables/            # SQLite table definitions
-│   ├── models/                # Data models and JSON deserializers
-│   └── network/               # Dio API client and Google Auth service
+│   ├── local/           # Drift DB, DAOs, tables
+│   ├── models/          # JSON models
+│   └── network/         # Dio client, Google Auth
 ├── presentation/
-│   ├── controllers/           # GetX controllers (auth, cart, catalog, dashboard, sync)
-│   ├── screens/
-│   │   ├── auth/              # Login screen
-│   │   ├── cart/              # Cart and checkout breakdown
-│   │   ├── dashboard/         # User overview and metrics
-│   │   ├── favourites/        # Saved items listing
-│   │   ├── products/          # Category list, product cards, product details
-│   │   └── splash/            # Animated splash with session check
-│   └── widgets/               # Reusable dialogs (SyncProgressDialog)
-└── main.dart                  # App entry point
+│   ├── controllers/     # GetX controllers
+│   ├── screens/         # auth, cart, dashboard, favourites, products, splash
+│   └── widgets/
+└── main.dart
 ```
+
+## Future Improvements
+
+- Auto-sync on reconnect instead of manual refresh only
+- Pagination instead of fetching all products upfront
 
 ---
 
 ## Getting Started
 
-### 1. Prerequisites
-- Flutter SDK (3.24+ recommended)
-- Android Studio / VS Code
-- A connected device or emulator
-
-### 2. Install dependencies
 ```bash
 flutter pub get
-```
-
-### 3. Generate Drift database files
-If you modify tables or DAOs, run the build runner:
-```bash
-dart run build_runner build --delete-conflicting-outputs
-```
-
-### 4. Run the application
-```bash
+dart run build_runner build --delete-conflicting-outputs   # if tables/DAOs change
 flutter run
 ```
 
----
+## Build
 
-## Build Commands
-
-- **Android APK:**
-  ```bash
-  flutter build apk --release
-  ```
+```bash
+flutter build apk --release
+```

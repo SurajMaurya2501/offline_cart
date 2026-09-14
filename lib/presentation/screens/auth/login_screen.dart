@@ -23,18 +23,28 @@ class LoginScreen extends StatelessWidget {
                   width: 90,
                   height: 90,
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
-                    shape: BoxShape.circle,
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF2563EB).withValues(alpha: 0.25),
+                        blurRadius: 20,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
-                  child: Icon(
-                    Icons.shopping_bag_outlined,
-                    size: 46,
-                    color: Colors.blue.shade700,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(22),
+                    child: Image.asset(
+                      'assets/images/app_logo.png',
+                      width: 90,
+                      height: 90,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 32),
                 const Text(
-                  'Product Catalog',
+                  'OfflineMart',
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
@@ -44,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  'Sign in to access your offline product catalog and sync orders seamlessly.',
+                  'Sign in to access OfflineMart and sync your catalog seamlessly.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,

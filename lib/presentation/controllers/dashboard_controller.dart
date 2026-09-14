@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:offline_cart/presentation/controllers/auth_controller.dart';
 import 'package:offline_cart/data/local/database/app_database.dart';
 import 'package:offline_cart/presentation/screens/auth/login_screen.dart';
+import 'package:offline_cart/presentation/widgets/logout_dialog.dart';
+
+const _syncDatePrefsKey = 'last_sync_date';
 
 class DashboardController extends GetxController {
   final user = Rxn<UserTableData>();
@@ -30,10 +32,14 @@ class DashboardController extends GetxController {
 
   Future<void> loadLastSyncDate() async {
     final prefs = await SharedPreferences.getInstance();
-    final dateStr = prefs.getString('last_sync_date');
+    final dateStr = prefs.getString(_syncDatePrefsKey);
     if (dateStr != null) {
       lastSyncDate.value = DateTime.tryParse(dateStr);
-    } else if (categories.isNotEmpty || products.isNotEmpty) {
+      return;
+    }
+    // No stored timestamp yet but we already have data on disk - probably an
+    // upgrade from before we started tracking this. Just stamp it now.
+    if (categories.isNotEmpty || products.isNotEmpty) {
       lastSyncDate.value = DateTime.now();
     }
   }
@@ -44,90 +50,35 @@ class DashboardController extends GetxController {
   }
 
   Future<void> logout() async {
-    final confirmed = await Get.dialog<bool>(
-      AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Confirm Logout'),
-        content: const Text(
-          'Are you sure you want to log out of your session? All locally stored data will be erased.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(result: false),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red.shade600,
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () => Get.back(result: true),
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
-    );
+    final confirmed = await LogoutDialog.confirm();
+    if (!confirmed) return;
 
-    if (confirmed == true) {
-      Get.dialog(
-        const PopScope(
-          canPop: false,
-          child: Center(
-            child: Card(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 16),
-                    Text(
-                      'Erasing local data and logging out...',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        barrierDismissible: false,
-      );
-      try {
-        await authController.signOut();
-        lastSyncDate.value = null;
-      } finally {
-        if (Get.isDialogOpen ?? false) {
-          Get.back();
-        }
-      }
-      Get.offAll(() => const LoginScreen());
+    LogoutDialog.showProgress();
+    try {
+      await authController.signOut();
+      lastSyncDate.value = null;
+    } finally {
+      LogoutDialog.dismissProgress();
     }
+    Get.offAll(() => const LoginScreen());
   }
 
+  static const _months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  ];
+
+  // Not pulling in intl just for one label - this covers what we need.
   String formatSyncDate(DateTime? dt) {
     if (dt == null) return 'Never synced';
-    final now = DateTime.now();
-    final diff = now.difference(dt);
+
+    final diff = DateTime.now().difference(dt);
     if (diff.inMinutes < 1) return 'Just now';
     if (diff.inHours < 1) return '${diff.inMinutes} min ago';
-    final months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
+
     final hour = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
     final minute = dt.minute.toString().padLeft(2, '0');
     final ampm = dt.hour >= 12 ? 'PM' : 'AM';
-    return '${dt.day} ${months[dt.month - 1]} ${dt.year}, $hour:$minute $ampm';
+    return '${dt.day} ${_months[dt.month - 1]} ${dt.year}, $hour:$minute $ampm';
   }
 }
